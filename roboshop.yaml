@@ -5,7 +5,7 @@
   vars:
     sg_id: sg-08fb0fdbf2f1d411e
     ami_id: ami-0220d79f3f480ecf5
-    domain_name: daws88s.online
+    domain_name: vardhineni.online
     env: dev
     action: create
     instances:
