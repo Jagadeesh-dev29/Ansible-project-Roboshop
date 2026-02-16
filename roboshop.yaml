@@ -1,0 +1,30 @@
+- name : create ec2 instances and Route53 records
+  hosts: local
+  connection : local
+  vars:
+   sg_id: sg-08fb0fdbf2f1d411e
+   ami_id: ami-0220d79f3f480ecf5
+   domain_name: vardhineni.online 
+   env: dev
+   instances:
+     -mongodb
+     -catalouge
+
+  tasks:
+  - name: start an instance with a public IP address
+    amazon.aws.ec2_instance:
+      instance_type: "t3.micro"
+      security_group: "{{ sg_id }}"
+      image_id: "{{ ami_id }}"
+      tags:
+       project : roboshop
+       Component : " {{ item }}"
+       Environment : "{{ env }}"
+       Name : " {{ item}} - {{ env }} "
+    loop : "{{ instances }} "
+    register : ec2_output
+  
+  - name : print the output
+    ansible.builtin.debug:
+      msg : "{{ec2_output}}"
+   
